@@ -1,0 +1,15 @@
+{
+    "variables": [
+        {
+            "name": "bot state",
+            "saveToDisk": false,
+            "isDictionary": false,
+            "value": "idle"
+        },
+        {
+            "name": "kyc status",
+            "saveToDisk": true,
+            "isDictionary": true
+        }
+    ]
+}

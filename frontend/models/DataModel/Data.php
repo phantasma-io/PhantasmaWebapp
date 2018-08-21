@@ -6,7 +6,7 @@
  * Time: 22:17
  */
 
-namespace frontend\models;
+namespace frontend\models\DataModel;
 
 use Yii;
 use yii\base\Model;
@@ -33,14 +33,18 @@ class Data extends Model
     public static function validateData($trigger)
     {
         $dataConfig = Yii::$app->params['dataConfig'];
-
-        if (in_array($trigger['TriggerType'], $dataConfig)) {
+        if (array_key_exists($trigger['triggerType'], $dataConfig)) {
             foreach ($trigger['data'] as $key => $value) {
-                if (in_array($key, $dataConfig[$trigger['TriggerType']])) {
-                    Data::validateKey($value, $dataConfig[$trigger['TriggerType']][$key]);
+                if (array_key_exists($key, $dataConfig[$trigger['triggerType']])) {
+
+                    var_dump(Data::validateKey($value, $dataConfig[$trigger['triggerType']][$key]));
+                    exit;
+
                 }
             }
         }
+
+        die("morri aqui");
 
     }
 

@@ -13,6 +13,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\Trigger;
+use frontend\models\DataModel\Data;
 
 /**
  * Site controller
@@ -75,8 +76,12 @@ class SiteController extends Controller
     {
         $trigger = new Trigger();
         $json = json_decode(file_get_contents('C:\xampp\htdocs\Triggers.txt'), true);
-        $triggerJson = $json['check state']['triggers'][0];
+        $triggerJson = $json['check state']['triggers'][1];
         $trigger->loadTrigger($triggerJson);
+        echo "<pre>";
+        print_r(Data::validateData($trigger));
+        echo "</pre>";
+        exit;
         $trigger->validate();
         echo "<pre>";
         print_r($trigger);

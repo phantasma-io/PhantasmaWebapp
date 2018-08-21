@@ -53,13 +53,46 @@ Per-user variable | Trigger for values associated with this user | "DictionaryVa
 Global variable |  Trigger for global values defined on the bot | "SingleVariable"
 Image | Trigger for image messages | "Image"
 
-### Text trigger type modifiers
+### Text trigger
+
+#### Data object
+
+```json
+{
+    "data": string
+}
+```
+
+Property Name | GUI element name | User input rules | JSON output rules
+-|-|-|-
+data | Regex expression | Anything goes | Whatever the user has written
+
+#### Modifiers
 
 GUI element name | Hint (i.e. on hover or whatever) | JSON output
 -|-|-
 Regex | Evaluates if the text message contains the defined regex pattern. To learn the relevant regex syntax go to https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference | 0
 
 ### Per-user variable trigger modifiers
+
+#### Data object
+
+```json
+{
+    "data": {
+        "variable": string,
+        "value": null/string
+    }
+}
+```
+
+Property Name | GUI element name | User input rules | JSON output rules
+-|-|-|-
+variable | Variable name | Dropdown with all the defined dictionary variables | The selected dictionary variable's name
+value | Preset value | Anything goes, but this field should only be visible for modifier "Preset value" | Whatever the user wrote
+
+
+#### Modifiers
 
 GUI element name | Hint (i.e. on hover or whatever) | JSON output
 -|-|-
@@ -69,12 +102,48 @@ Entry check | Check if user has an entry on this variable | 2
 
 ### Global variable trigger modifiers
 
+#### Data object
+
+```json
+{
+    "data": {
+        "variable": string,
+        "value": null/string
+    }
+}
+```
+
+Property Name | GUI element name | User input rules | JSON output rules
+-|-|-|-
+variable | Variable name | Dropdown with all the defined dictionary variables | The selected dictionary variable's name
+value | Preset value | Anything goes, but this field should only be visible for modifier "Preset value" | Whatever the user wrote
+
+#### Modifiers
+
 GUI element name | Hint (i.e. on hover or whatever) | JSON output
 -|-|-
 User message | Compare the received text message to the user variable's current value | 0
 Preset value | Compare a value defined by you to the user variable's current value | 1
 
 ### Image trigger modifiers
+
+#### Data object
+
+```json
+{
+    "data": {
+        "minSize": null/float,
+        "maxSize": null/float
+    }
+}
+```
+
+Property Name | GUI element name | User input rules | JSON output rules
+-|-|-|-
+minSize | Minimum size | Number input field | Whatever the user wrote
+maxSize | Maximum size | Number input field | Whatever the user wrote
+
+#### Modifiers
 
 GUI element name | Hint (i.e. on hover or whatever) | JSON output
 -|-|-

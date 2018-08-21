@@ -11,7 +11,6 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 
-
 class Trigger extends Model
 {
     public $triggerType;
@@ -20,7 +19,9 @@ class Trigger extends Model
     public $subgroup;
     public $onFailMsg;
 
-    static private $TRIGGERTYPES = ['Text','DictionaryVariable','SingleVariable', 'Image'];
+    static private $TRIGGER_TYPES = ['Text','DictionaryVariable','SingleVariable', 'Image'];
+
+
     public function rules()
     {
         return [
@@ -32,7 +33,7 @@ class Trigger extends Model
     }
 
     public function triggerTypeValidate($attribute, $params){//triggerType
-        return in_array($this->$attribute, Trigger::$TRIGGERTYPES);
+        return in_array($this->$attribute, Trigger::$TRIGGER_TYPES);
     }
 
     public function dataValidate($attribute, $params){

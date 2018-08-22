@@ -32,15 +32,22 @@ class Data extends Model
 
     public static function validateData($trigger)
     {
+
         $dataConfig = Yii::$app->params['dataConfig'];
+
         if (array_key_exists($trigger['triggerType'], $dataConfig)) {
-            foreach ($trigger['data'] as $key => $value) {
-                if (array_key_exists($key, $dataConfig[$trigger['triggerType']])) {
+            if (is_array($trigger['data'])) {
+                foreach ($trigger['data'] as $key => $value) {
+                    if (array_key_exists($key, $dataConfig[$trigger['triggerType']])) {
 
-                    var_dump(Data::validateKey($value, $dataConfig[$trigger['triggerType']][$key]));
-                    exit;
+                        var_dump(Data::validateKey($value, $dataConfig[$trigger['triggerType']][$key]));
+                        exit;
 
+                    }
                 }
+            }else{
+                var_dump(Data::validateKey($trigger['data'], $dataConfig[$trigger['triggerType']]));
+                exit;
             }
         }
 

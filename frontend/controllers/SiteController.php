@@ -76,7 +76,7 @@ class SiteController extends Controller
     {
         $trigger = new Trigger();
         $json = json_decode(file_get_contents('C:\xampp\htdocs\Triggers.txt'), true);
-        $triggerJson = $json['check state']['triggers'][1];
+        $triggerJson = $json['check state']['triggers'][0];
         $trigger->loadTrigger($triggerJson);
         echo "<pre>";
         print_r(Data::validateData($trigger));

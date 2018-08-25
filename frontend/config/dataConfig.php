@@ -1,9 +1,7 @@
 <?php
 return [
     'dataConfig' => [
-        'Text' => [
-            'string'
-        ],
+        'Text' => ['string'],
         'DictionaryVariable' => [
             'variable' => ['string'],
             'value' => ['string', 'null']

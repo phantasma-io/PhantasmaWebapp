@@ -8,6 +8,7 @@
 
 namespace frontend\models\DataModel;
 
+use frontend\models\Trigger\Trigger;
 use Yii;
 use yii\base\Model;
 
@@ -30,29 +31,28 @@ class Data extends Model
         ],
     */
 
-    public static function validateData($trigger)
+    public static function validateData(Trigger $trigger)
     {
-
         $dataConfig = Yii::$app->params['dataConfig'];
+        $isValid=true;
+        if (array_key_exists($trigger->triggerType, $dataConfig)) {
+            if (is_array($trigger->data)) {
+                foreach ($trigger->data as $key => $value) {
+                    if (array_key_exists($key, $dataConfig[$trigger->triggerType])) {
 
-        if (array_key_exists($trigger['triggerType'], $dataConfig)) {
-            if (is_array($trigger['data'])) {
-                foreach ($trigger['data'] as $key => $value) {
-                    if (array_key_exists($key, $dataConfig[$trigger['triggerType']])) {
-
-                        var_dump(Data::validateKey($value, $dataConfig[$trigger['triggerType']][$key]));
-                        exit;
-
+                        if(!Data::validateKey($value, $dataConfig[$trigger->triggerType][$key])){
+                            $isValid=false;
+                        }
                     }
                 }
             }else{
-                var_dump(Data::validateKey($trigger['data'], $dataConfig[$trigger['triggerType']]));
-                exit;
+                if(Data::validateKey($trigger->data, $dataConfig[$trigger->triggerType])){
+                    $isValid=false;
+                }
             }
         }
 
-        die("morri aqui");
-
+       return $isValid;
     }
 
     private static function validateKey($value, $data)

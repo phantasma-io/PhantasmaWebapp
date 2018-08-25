@@ -1,8 +1,9 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\TriggerGroup\TriggerGroup;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -12,7 +13,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use frontend\models\Trigger;
+use frontend\models\Trigger\Trigger;
 use frontend\models\DataModel\Data;
 
 /**
@@ -39,6 +40,11 @@ class SiteController extends Controller
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['json'],
+                        'allow' => true,
+                        'roles' => ['?'],
                     ],
                 ],
             ],
@@ -77,16 +83,15 @@ class SiteController extends Controller
         $trigger = new Trigger();
         $json = json_decode(file_get_contents('C:\xampp\htdocs\Triggers.txt'), true);
         $triggerJson = $json['check state']['triggers'][0];
-        $trigger->loadTrigger($triggerJson);
-        echo "<pre>";
-        print_r(Data::validateData($trigger));
-        echo "</pre>";
-        exit;
-        $trigger->validate();
-        echo "<pre>";
-        print_r($trigger);
-        echo "</pre>";
-        exit;
+        $triggerGroup = new TriggerGroup();
+        foreach ($json as $triggerName => $triggerGroupInfo) {
+            $triggerGroup->loadTriggerGroup($triggerGroupInfo, $triggerName);
+            echo "<pre>";
+            print_r($triggerGroup);
+            echo "</pre>";
+            exit;
+        }
+
         return $this->render('index');
     }
 
@@ -213,7 +218,7 @@ class SiteController extends Controller
     {
         try {
             $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
+        } catch (InvalidArgumentException $e) {
             throw new BadRequestHttpException($e->getMessage());
         }
 

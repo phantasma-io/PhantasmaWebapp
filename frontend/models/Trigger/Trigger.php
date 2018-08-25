@@ -6,8 +6,9 @@
  * Time: 19:06
  */
 
-namespace frontend\models;
+namespace frontend\models\Trigger;
 
+use frontend\models\DataModel\Data;
 use Yii;
 use yii\base\Model;
 
@@ -19,7 +20,7 @@ class Trigger extends Model
     public $subgroup;
     public $onFailMsg;
 
-    static private $TRIGGER_TYPES = ['Text','DictionaryVariable','SingleVariable', 'Image'];
+    static private $TRIGGER_TYPES = ['Text', 'DictionaryVariable', 'SingleVariable', 'Image'];
 
 
     public function rules()
@@ -32,21 +33,20 @@ class Trigger extends Model
         ];
     }
 
-    public function triggerTypeValidate($attribute, $params){//triggerType
+    public function triggerTypeValidate($attribute, $params)
+    {//triggerType
         return in_array($this->$attribute, Trigger::$TRIGGER_TYPES);
     }
 
-    public function dataValidate($attribute, $params){
-        echo "<pre>";
-        print_r($this);
-        print_r($params);
-        echo "</pre>";
-        exit;
+    public function dataValidate($attribute, $params)
+    {
+        return Data::validateData($this);
     }
 
-    public function loadTrigger($array){
+    public function loadTrigger($array)
+    {
 
-        if(isset($array['triggerType']) && isset($array['modifier']) && isset($array['data'])){
+        if (isset($array['triggerType']) && isset($array['modifier']) && isset($array['data'])) {
             $this->triggerType = $array['triggerType'];
             $this->modifier = $array['modifier'];
             $this->data = $array['data'];

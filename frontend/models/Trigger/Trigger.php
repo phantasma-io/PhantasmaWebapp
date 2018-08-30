@@ -45,7 +45,6 @@ class Trigger extends Model
 
     public function loadTrigger($array)
     {
-
         if (isset($array['triggerType']) && isset($array['modifier']) && isset($array['data'])) {
             $this->triggerType = $array['triggerType'];
             $this->modifier = $array['modifier'];
@@ -54,5 +53,27 @@ class Trigger extends Model
             $this->onFailMsg = $array['onFailMsg'];
         }
         return false;
+    }
+
+    public function triggerTypeToString()
+    {
+        switch ($this->triggerType) {
+            case "Text":
+                return "Text";
+                break;
+            case "DictionaryVariable":
+                return "Per-user variable";
+                break;
+            case "SingleVariable":
+                return "Global variable";
+                break;
+            case "Image":
+                return "Image";
+                break;
+            default:
+                return "Text";
+                break;
+
+        }
     }
 }

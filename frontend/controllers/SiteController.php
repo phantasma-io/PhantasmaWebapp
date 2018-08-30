@@ -84,12 +84,10 @@ class SiteController extends Controller
         $json = json_decode(file_get_contents('C:\xampp\htdocs\Triggers.txt'), true);
         $triggerJson = $json['check state']['triggers'][0];
         $triggerGroup = new TriggerGroup();
+        $triggerGroupArray = [];
         foreach ($json as $triggerName => $triggerGroupInfo) {
             $triggerGroup->loadTriggerGroup($triggerGroupInfo, $triggerName);
-            echo "<pre>";
-            print_r($triggerGroup);
-            echo "</pre>";
-            exit;
+            $triggerGroupArray[] = $triggerGroup;
         }
 
         return $this->render('index');

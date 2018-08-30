@@ -24,11 +24,17 @@ class TriggerGroup extends Model
     public function rules()
     {
         return [
-            [['triggerType'], 'triggerTypeValidate'],
-            [['data'], 'dataValidate'],
-            ['modifier', 'integer'],
-            [['subgroup', 'onFailMsg'], 'string'],
+            [['triggerGroupName'], 'string'],
+            [['privateTrigger'], 'privateTriggerValidate']
         ];
+    }
+
+    public function privateTriggerValidate($attribute, $params)
+    {
+        echo "<pre>";
+        var_dump(is_null($this->$attribute));
+        echo "</pre>";
+        exit;
     }
 
     public function loadTriggerGroup($trigger, $name)
@@ -38,8 +44,21 @@ class TriggerGroup extends Model
         foreach ($trigger['triggers'] as $triggerInfo) {
             $triggerModel = new Trigger();
             $triggerModel->loadTrigger($triggerInfo);
-            if($triggerModel->validate()){
-                $this->triggers[]=$triggerModel;
+            if ($triggerModel->validate()) {
+                $this->triggers[] = $triggerModel;
+            }
+        }
+    }
+
+    public function privateTriggerToString()
+    {
+        if (is_null($this->privateTrigger)) {
+            return "For all chat types";
+        } else {
+            if ($this->privateTrigger) {
+                return "For public chat only";
+            } else {
+                return "For private chat only";
             }
         }
     }

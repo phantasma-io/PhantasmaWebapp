@@ -1,6 +1,6 @@
 {
     "check state": {
-        "privateTrigger": true,
+        "privateTrigger": null,
         "triggers": [
             {
                 "triggerType": "SingleVariable",
